@@ -1,6 +1,4 @@
-# calendar-tt
-
-This template should help get you started developing with Vue 3 in Vite.
+# Calendar Test Task
 
 ## Recommended IDE Setup
 
