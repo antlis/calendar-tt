@@ -1,0 +1,10 @@
+@use './base';
+@use './calendar-override';
+
+#app {
+  padding: var(--app-padding);
+  min-height: 100vh;
+
+  font-weight: normal;
+}
+

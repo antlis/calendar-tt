@@ -1,0 +1,103 @@
+.custom-calendar {
+  --color-pale: var(--vc-weekday-color); // This color var from v-calendar plugin
+
+  &.vc-monthly {
+    .is-not-in-month .vc-day-content {
+      pointer-events: all;
+      opacity: 1;
+      &:not(.weekend) {
+        color: var(--color-pale);
+      }
+    }
+  }
+
+  border-radius: 20px;
+
+  .vc-header {
+    max-width: 250px;
+    .vc-arrow {
+      &, &:hover {
+        background: transparent;
+      }
+    }
+    .vc-title {
+      font-size: 18px;
+      background: transparent;
+      color: var(--vt-c-text-soft-blue);
+      text-transform: uppercase;
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .vc-pane {
+    min-height: calc(100vh - (var(--app-padding) * 2));
+  }
+
+  .vc-weeks {
+    // 30px calendar header height
+    height: calc(100% - 30px);
+    > .vc-week {
+      height: 15.7%;
+    }
+  }
+
+  .vc-weekday {
+    color: var(--vt-c-text-dark);
+    text-transform: uppercase;
+    &-7, &-1 {
+      color: var(--color-pale); // This color var from v-calendar plugin
+    }
+  }
+
+  .vc-day {
+    outline: 1px solid var(--vt-c-darker-gray);
+  }
+
+  .vc-day-content {
+    width: 100%;
+    padding-right: 15px;
+    justify-content: flex-end;
+    border-radius: 0;
+    font-size: 18px;
+    &:hover {
+      background: transparent;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: #fff;
+    }
+    &.is-disabled {
+      &:not(.weekend) {
+        color: var(--color-pale);
+      }
+      &:before {
+        background: var(--vt-c-soft-gray);
+      }
+    }
+
+  }
+
+  .weekend {
+    color: var(--vt-c-text-soft-blue);
+  }
+
+  .event {
+    margin: 0 3%;
+    background: var(--vt-c-soft-pink);
+    font-size: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+}
