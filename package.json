@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "floating-vue": "^2.0.0-beta.24",
     "pinia": "^2.1.6",
     "v-calendar": "^3.0.3",
     "vue": "^3.3.4",

@@ -3,6 +3,11 @@ import { ref } from 'vue'
 import datesObject from '@/calendarData.json'
 
 const WEEKEND_INDEX = [0,6]
+const LOCALE_CONFIG = {
+  id: 'ru',
+  firstDayOfTheWeek: 2,
+  masks: { weekdays: 'WWWW' },
+}
 const { dates: datesRaw } = datesObject
 const dates = datesRaw.map(({ date, event }) => {
   const dateObj = new Date(date)
@@ -11,6 +16,9 @@ const dates = datesRaw.map(({ date, event }) => {
     customData: {
       event,
     },
+    popover: {
+      label: event
+    }
   }
 })
 
@@ -27,30 +35,16 @@ const attrs = ref([
   },
   ...dates
 ])
-
-const localeConfig = {
-  id: 'ru',
-  firstDayOfTheWeek: 2,
-  masks: { weekdays: 'WWWW' },
-}
-
-const log = (data: any) => {
-  console.log(data);
-}
 </script>
 
 <template>
   <VCalendar
     :attributes="attrs"
-    :locale="localeConfig"
+    :locale="LOCALE_CONFIG"
     class="custom-calendar"
     expanded
     borderless
   >
-    <!-- <template v-slot:day-content="data"> -->
-    <!--   <button @click="log(data)">day</button> -->
-    <!-- </template> -->
-
     <template #day-content="{ day, dayProps, attributes }">
       <div
         :class="[
@@ -62,7 +56,6 @@ const log = (data: any) => {
         :aria-label="dayProps['aria-label']"
         role="button"
         :ariaDisabled="dayProps['aria-disabled']"
-        @click="log(day)"
       >
         {{ day.day }}
       </div>
@@ -70,14 +63,18 @@ const log = (data: any) => {
         class="event"
         v-if="attributes?.[0]?.customData?.event"
       >
-        {{ attributes?.[0]?.customData?.event }}
+        <VTooltip>
+          <div>
+            {{ attributes?.[0]?.customData?.event }}
+          </div>
+          <template #popper>
+            <span class="tooltip-content">
+              {{ day.locale.monthNames[day.month - 1].toUpperCase() }}
+            </span>
+          </template>
+        </VTooltip>
       </div>
     </template>
-    <!-- <template #day-popover="{ format }"> -->
-    <!--   <div class="text-sm"> -->
-    <!--     something -->
-    <!--   </div> -->
-    <!-- </template> -->
   </VCalendar>
 </template>
 
