@@ -2,6 +2,8 @@
 
 [Demo link](https://calendar-tt.vercel.app/)
 
+![screenshot](https://res.cloudinary.com/dvbyognrh/image/upload/v1693266682/screenshots/Screenshot_from_2023-08-29_04-50-13.png "screenshot")
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
