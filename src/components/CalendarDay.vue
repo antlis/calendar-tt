@@ -32,7 +32,7 @@ defineProps<{
     v-if="event"
   >
     <VTooltip>
-      <div>
+      <div class="event-title">
         {{ event }}
       </div>
       <template #popper>
