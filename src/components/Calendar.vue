@@ -2,12 +2,16 @@
 import { ref } from 'vue'
 import datesObject from '@/calendarData.json'
 import CalendarDay from './CalendarDay.vue'
+import { useMediaQuery } from '@vueuse/core'
+
+const isLargeScreen = useMediaQuery('(min-width: 768px)')
 
 const LOCALE_CONFIG = {
   id: 'ru',
   firstDayOfTheWeek: 2,
   masks: { weekdays: 'WWWW' },
 }
+
 const { dates: datesRaw } = datesObject
 const dates = datesRaw.map(({ date, event }) => {
   const dateObj = new Date(date)
@@ -38,14 +42,31 @@ const attrs = ref([
 </script>
 
 <template>
+  <!--
+    Changing key rerenders component to update locale config */ }}
+    And set weekdays to WW for small screens
+  -->
   <VCalendar
+    :key="isLargeScreen ? 1 : 2"
     :attributes="attrs"
-    :locale="LOCALE_CONFIG"
+    :locale="isLargeScreen
+      ? LOCALE_CONFIG :
+      {
+        ...LOCALE_CONFIG,
+        ...{ masks: { weekdays: 'WW' } }
+      }
+    "
     class="custom-calendar"
     expanded
     borderless
   >
     <template #day-content="{ day, dayProps, attributes }">
+      <!--
+          Cause there is no props typings
+          for v-calendar plugin it causes issues below
+          so I put ignore to the next line
+      -->
+      <!-- @vue-ignore -->
       <CalendarDay
         :id="day.id"
         :classes="dayProps.class"
@@ -57,38 +78,12 @@ const attrs = ref([
         :tooltip-content="day.locale.monthNames[day.month - 1].toUpperCase()"
 
       />
-      <!-- <div -->
-      <!--   :class="[ -->
-      <!--     ...dayProps.class, -->
-      <!--     WEEKEND_INDEX.includes(new Date(day.id).getDay()) && 'weekend', -->
-      <!--     new Date(day.id) < new Date() && 'is-disabled' -->
-      <!--   ]" -->
-      <!--   :style="dayProps.style" -->
-      <!--   :aria-label="dayProps['aria-label']" -->
-      <!--   role="button" -->
-      <!--   :ariaDisabled="dayProps['aria-disabled']" -->
-      <!-- > -->
-      <!--   {{ day.day }} -->
-      <!-- </div> -->
-      <!-- <div -->
-      <!--   class="event" -->
-      <!--   v-if="attributes?.[0]?.customData?.event" -->
-      <!-- > -->
-      <!--   <VTooltip> -->
-      <!--     <div> -->
-      <!--       {{ attributes?.[0]?.customData?.event }} -->
-      <!--     </div> -->
-      <!--     <template #popper> -->
-      <!--       <span class="tooltip-content"> -->
-      <!--         {{ day.locale.monthNames[day.month - 1].toUpperCase() }} -->
-      <!--       </span> -->
-      <!--     </template> -->
-      <!--   </VTooltip> -->
-      <!-- </div> -->
     </template>
   </VCalendar>
 </template>
 
 <style scoped lang="scss">
-// check /src/assets/custom-calendar.scss
+// Override styles should be defined globally to work
+// So
+// check /src/assets/custom-override.scss
 </style>

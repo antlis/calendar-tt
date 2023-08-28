@@ -1,16 +1,20 @@
 <script setup lang="ts">
+import CalendarDayEvent from './CalendarDayEvent.vue'
+
 const WEEKEND_INDEX = [0,6]
 
-defineProps<{
+interface IDayProps {
   id: string
   day: string
-  event: string
+  event?: string
+  tooltipContent?: string
   ariaLabel: string
   ariaDisabled: boolean
   styling: string
-  tooltipContent: string
   classes: string[]
-}>()
+}
+
+defineProps<IDayProps>()
 </script>
 
 <template>
@@ -27,19 +31,15 @@ defineProps<{
   >
     {{ day }}
   </div>
-  <div
-    class="event"
+  <CalendarDayEvent
     v-if="event"
-  >
-    <VTooltip>
-      <div class="event-title">
-        {{ event }}
-      </div>
-      <template #popper>
-        <span class="tooltip-content">
-          {{ tooltipContent }}
-        </span>
-      </template>
-    </VTooltip>
-  </div>
+    :event="event"
+    :tooltip-content="tooltipContent"
+  />
 </template>
+
+<style scoped lang="scss">
+.weekend {
+  color: var(--vt-c-text-soft-blue);
+}
+</style>

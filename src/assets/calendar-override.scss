@@ -1,6 +1,12 @@
 .custom-calendar {
   --color-pale: var(--vc-weekday-color); // This color var from v-calendar plugin
 
+  border-radius: 20px;
+
+  &.vc-expanded {
+    width: 100%;
+  }
+
   &.vc-monthly {
     .is-not-in-month .vc-day-content {
       pointer-events: all;
@@ -10,8 +16,6 @@
       }
     }
   }
-
-  border-radius: 20px;
 
   .vc-header {
     max-width: 250px;
@@ -64,6 +68,9 @@
     justify-content: flex-end;
     border-radius: 0;
     font-size: 18px;
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
     cursor: auto;
     &:hover {
       background: transparent;
@@ -89,23 +96,6 @@
       }
     }
 
-  }
-
-  .weekend {
-    color: var(--vt-c-text-soft-blue);
-  }
-
-  .event {
-    cursor: pointer;
-    margin: 0 3%;
-    background: var(--vt-c-soft-pink);
-    font-size: 26px;
-  }
-
-  .event-title {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
   }
 
 }
