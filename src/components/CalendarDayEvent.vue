@@ -20,9 +20,13 @@ defineProps<IDayEventProps>()
         <i v-else class="event__info-icon"><InfoIcon /></i>
       </div>
       <template #popper>
-        <span class="event__tooltip-content">
+        <span v-if="isLargeScreen" class="event__tooltip-content">
           {{ tooltipContent }}
         </span>
+        <div v-else class="event__tooltip-content">
+          <div>{{ tooltipContent }}</div>
+          <div>{{ event }}</div>
+        </div>
       </template>
     </VTooltip>
   </div>
