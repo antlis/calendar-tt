@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import datesObject from '@/calendarData.json'
+import CalendarDay from './CalendarDay.vue'
 
-const WEEKEND_INDEX = [0,6]
 const LOCALE_CONFIG = {
   id: 'ru',
   firstDayOfTheWeek: 2,
@@ -46,34 +46,45 @@ const attrs = ref([
     borderless
   >
     <template #day-content="{ day, dayProps, attributes }">
-      <div
-        :class="[
-          ...dayProps.class,
-          WEEKEND_INDEX.includes(new Date(day.id).getDay()) && 'weekend',
-          new Date(day.id) < new Date() && 'is-disabled'
-        ]"
-        :style="dayProps.style"
+      <CalendarDay
+        :id="day.id"
+        :classes="dayProps.class"
+        :day="day.day"
+        :styling="dayProps.style"
+        :event="attributes?.[0]?.customData?.event"
         :aria-label="dayProps['aria-label']"
-        role="button"
-        :ariaDisabled="dayProps['aria-disabled']"
-      >
-        {{ day.day }}
-      </div>
-      <div
-        class="event"
-        v-if="attributes?.[0]?.customData?.event"
-      >
-        <VTooltip>
-          <div>
-            {{ attributes?.[0]?.customData?.event }}
-          </div>
-          <template #popper>
-            <span class="tooltip-content">
-              {{ day.locale.monthNames[day.month - 1].toUpperCase() }}
-            </span>
-          </template>
-        </VTooltip>
-      </div>
+        :aria-disabled="dayProps['aria-disabled']"
+        :tooltip-content="day.locale.monthNames[day.month - 1].toUpperCase()"
+
+      />
+      <!-- <div -->
+      <!--   :class="[ -->
+      <!--     ...dayProps.class, -->
+      <!--     WEEKEND_INDEX.includes(new Date(day.id).getDay()) && 'weekend', -->
+      <!--     new Date(day.id) < new Date() && 'is-disabled' -->
+      <!--   ]" -->
+      <!--   :style="dayProps.style" -->
+      <!--   :aria-label="dayProps['aria-label']" -->
+      <!--   role="button" -->
+      <!--   :ariaDisabled="dayProps['aria-disabled']" -->
+      <!-- > -->
+      <!--   {{ day.day }} -->
+      <!-- </div> -->
+      <!-- <div -->
+      <!--   class="event" -->
+      <!--   v-if="attributes?.[0]?.customData?.event" -->
+      <!-- > -->
+      <!--   <VTooltip> -->
+      <!--     <div> -->
+      <!--       {{ attributes?.[0]?.customData?.event }} -->
+      <!--     </div> -->
+      <!--     <template #popper> -->
+      <!--       <span class="tooltip-content"> -->
+      <!--         {{ day.locale.monthNames[day.month - 1].toUpperCase() }} -->
+      <!--       </span> -->
+      <!--     </template> -->
+      <!--   </VTooltip> -->
+      <!-- </div> -->
     </template>
   </VCalendar>
 </template>
