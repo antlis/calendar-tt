@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import InfoIcon from './icons/IconInfo.vue'
 import { useMediaQuery } from '@vueuse/core'
 
@@ -6,14 +7,27 @@ const isLargeScreen = useMediaQuery('(min-width: 768px)')
 
 interface IDayEventProps {
   event?: string
+  description?: string
   tooltipContent?: string
+}
+
+const eventBox = ref(null)
+
+function showDescription(desc: string|undefined) {
+  const elem = (eventBox as any)
+  elem.value.classList.toggle('event--popup-visible')
 }
 
 defineProps<IDayEventProps>()
 </script>
 
 <template>
-  <div class="event">
+  <div
+    class="event"
+    @click="() => showDescription(description)"
+    :data-description="description"
+    ref="eventBox"
+  >
     <VTooltip>
       <div class="event__title">
         <span v-if="isLargeScreen">{{ event }}</span>
@@ -25,7 +39,7 @@ defineProps<IDayEventProps>()
         </span>
         <div v-else class="event__tooltip-content">
           <div>{{ tooltipContent }}</div>
-          <div>{{ event }}</div>
+          <div>{{ event }} - {{ description }}</div>
         </div>
       </template>
     </VTooltip>
@@ -38,6 +52,24 @@ defineProps<IDayEventProps>()
   margin: 0 3%;
   background: var(--vt-c-soft-pink);
   font-size: 26px;
+  position: realtive;
+
+  &:after {
+    content: attr(data-description);
+    position: absolute;
+    background: white;
+    border: thin solid black;
+    top: -180px;
+    width: 250px;
+    height: 200px;
+    text-align: center;
+    display: none;
+  }
+
+  &--popup-visible:after {
+    display: block;
+  }
+
   @media (max-width: 1850px) {
     font-size: 1vw;
   }

@@ -13,12 +13,13 @@ const LOCALE_CONFIG = {
 }
 
 const { dates: datesRaw } = datesObject
-const dates = datesRaw.map(({ date, event }) => {
+const dates = datesRaw.map(({ date, event, description }) => {
   const dateObj = new Date(date)
   return {
     dates: dateObj,
     customData: {
       event,
+      description,
     },
     popover: {
       label: event
@@ -73,6 +74,7 @@ const attrs = ref([
         :day="day.day"
         :styling="dayProps.style"
         :event="attributes?.[0]?.customData?.event"
+        :description="attributes?.[0]?.customData?.description"
         :aria-label="dayProps['aria-label']"
         :aria-disabled="dayProps['aria-disabled']"
         :tooltip-content="day.locale.monthNames[day.month - 1].toUpperCase()"
