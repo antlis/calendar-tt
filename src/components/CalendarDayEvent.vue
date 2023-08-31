@@ -13,7 +13,7 @@ interface IDayEventProps {
 
 const eventBox = ref(null)
 
-function showDescription(desc: string|undefined) {
+function toggleDescriptionVisibility() {
   const elem = (eventBox as any)
   elem.value.classList.toggle('event--popup-visible')
 }
@@ -24,7 +24,7 @@ defineProps<IDayEventProps>()
 <template>
   <div
     class="event"
-    @click="() => showDescription(description)"
+    @click="toggleDescriptionVisibility"
     :data-description="description"
     ref="eventBox"
   >
