@@ -7,6 +7,7 @@ interface IDayProps {
   id: string
   day: string
   event?: string
+  description?: string
   tooltipContent?: string
   ariaLabel: string
   ariaDisabled: boolean
@@ -34,6 +35,7 @@ defineProps<IDayProps>()
   <CalendarDayEvent
     v-if="event"
     :event="event"
+    :description="description"
     :tooltip-content="tooltipContent"
   />
 </template>
