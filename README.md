@@ -1,5 +1,7 @@
 # Calendar Test Task
 
+[Requirments description](https://docs.google.com/document/d/1rgy4x4LaYHQeqJj5GF9Jz82pP6f4wpOCBJq-g1-3R3k/edit)
+
 [Demo link](https://calendar-tt.vercel.app/)
 
 ![screenshot](https://res.cloudinary.com/dvbyognrh/image/upload/v1693266682/screenshots/Screenshot_from_2023-08-29_04-50-13.png "screenshot")
